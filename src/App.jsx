@@ -1,9 +1,15 @@
-function App() {
+import Header from "./Header.jsx";
+import Game from "./game-components/Game.jsx";
+import Footer from "./Footer.jsx"
+
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline text-red-500">
-      Hello world!
-    </h1>
+    <div className="h-screen min-h-screen flex flex-col">
+      <Header />
+      <Game />
+      <Footer />
+    </div>
   );
 }
 
-export default App
+export default App;
