@@ -16,7 +16,7 @@ const Game = () => {
             }, 1000);
             return () => clearInterval(id);
         }
-    }, [wordList, lives]); // interval resets everytime wordList changes
+    }, [wordList]); // interval resets everytime wordList changes
 
     const addWord = () => {
         const newWord = {
@@ -25,7 +25,7 @@ const Game = () => {
             y: Math.random() * 100,
             x: Math.random() * 100,
             timerId: setTimeout(() => {
-                removeWordTimeout(newWord);
+                removeWordByTimeout(newWord);
             }, 5000)
         };
 
@@ -35,13 +35,13 @@ const Game = () => {
     const checkInputIsValid = (event) => {
         if (event.key === "Enter") {
             if (wordList.some(word => word.text === input)) {
-                removeWord(input);
+                removeWordByCorrectInput(input);
                 setInput("");
             }
         }
     }
 
-    const removeWordTimeout = (wordToRemove) => {
+    const removeWordByTimeout = (wordToRemove) => {
         clearTimeout(wordToRemove.timerId);
 
         // functional updates ensure we are working with latest state values
@@ -49,7 +49,7 @@ const Game = () => {
         setLives(prevLives => prevLives - 1);
 
     }
-    const removeWord = (wordToRemove) => {
+    const removeWordByCorrectInput = (wordToRemove) => {
         const wordToRemoveObj = wordList.find(word => word.text === wordToRemove);
         clearTimeout(wordToRemoveObj.timerId);
         setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemoveObj.id));
@@ -63,7 +63,7 @@ const Game = () => {
                 </div>
                 <Stats/>
             </div>
-            <h1>{lives}</h1>
+            <h1>Lives: {lives}</h1>
             <input 
                 value={input} 
                 onChange={e => setInput(e.target.value.trim())} 
