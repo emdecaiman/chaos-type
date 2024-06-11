@@ -2,70 +2,68 @@ import { useState, useEffect } from "react";
 import { generate } from "random-words";
 import { v4 as uuidv4 } from 'uuid';
 import Stats from "./Stats.jsx";
-
-
-
-const ListItem = (props) => {
-    return <li>{props.word}</li>;
-}
-
-const List = (props) => {
-    return (
-        <ul>
-            {props.wordList.map((word) =>{
-                return <ListItem key={word.id} word={word.text} />;
-            })}
-        </ul>
-    );
-}
+import List from "./List.jsx";
 
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [input, setInput] = useState("");
+    const [lives, setLives] = useState(3);
     
     useEffect(() => {
-        const id = setInterval(() => {
-            addWord();
-        }, 750);
-
-        return () => clearInterval(id);
-    }, [wordList]); // interval resets everytime wordList changes
+        if (lives > 0) {
+            const id = setInterval(() => {
+                addWord();
+            }, 1000);
+            return () => clearInterval(id);
+        }
+    }, [wordList, lives]); // interval resets everytime wordList changes
 
     const addWord = () => {
         const newWord = {
             id: uuidv4(),
             text: generate(),
+            y: Math.random() * 100,
+            x: Math.random() * 100,
+            timerId: setTimeout(() => {
+                removeWordTimeout(newWord);
+            }, 5000)
         };
 
-        const newWordList = [...wordList, newWord];
-        setWordList(newWordList);
+        setWordList(prevWordList => [...prevWordList, newWord]);
     }
 
     const checkInputIsValid = (event) => {
         if (event.key === "Enter") {
             if (wordList.some(word => word.text === input)) {
-                console.log("Input in wordlist")
                 removeWord(input);
                 setInput("");
-            } else {
-                console.log("Input not in wordlist");
             }
         }
     }
 
-    const removeWord = (wordToRemove) => {
-        const updatedWordList = wordList.filter(word => word.text !== wordToRemove);
-        setWordList(updatedWordList);
-    }
+    const removeWordTimeout = (wordToRemove) => {
+        clearTimeout(wordToRemove.timerId);
 
+        // functional updates ensure we are working with latest state values
+        setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemove.id));
+        setLives(prevLives => prevLives - 1);
+
+    }
+    const removeWord = (wordToRemove) => {
+        const wordToRemoveObj = wordList.find(word => word.text === wordToRemove);
+        clearTimeout(wordToRemoveObj.timerId);
+        setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemoveObj.id));
+    }
+    
     return (
         <>
             <div className="flex flex-row justify-center h-full m-20">
-                <div className="bg-green-500 w-3/4">
+                <div className="bg-green-500 w-3/4 relative">
                     <List wordList={wordList} />
                 </div>
                 <Stats/>
             </div>
+            <h1>{lives}</h1>
             <input 
                 value={input} 
                 onChange={e => setInput(e.target.value.trim())} 
