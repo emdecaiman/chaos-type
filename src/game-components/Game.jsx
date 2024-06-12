@@ -57,20 +57,22 @@ const Game = () => {
     
     return (
         <>
-            <div className="flex flex-row justify-center h-full m-20">
-                <div className="bg-green-500 w-3/4 relative">
-                    <List wordList={wordList} />
+            <div className="flex flex-col items-center">
+                <Stats lives={lives}/>
+                <div className="h-[640px] w-[960px] my-5">
+                    <div className="h-[640px] relative bg-white bg-opacity-5 shadow-2xl">
+                        <List wordList={wordList} />
+                    </div>
                 </div>
-                <Stats/>
+                <input
+                    className="text-black mx-10 mb-5 w-[960px]"
+                    value={input} 
+                    onChange={e => setInput(e.target.value.trim())} 
+                    onKeyDown={checkInputIsValid} 
+                    type="text" 
+                />
             </div>
-            <h1>Lives: {lives}</h1>
-            <input 
-                value={input} 
-                onChange={e => setInput(e.target.value.trim())} 
-                onKeyDown={checkInputIsValid} 
-                type="text" 
-            />
-        </>
+            </>
     );
 }
 

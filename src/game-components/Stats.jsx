@@ -1,9 +1,9 @@
-const Stats = () => {
+const Stats = (props) => {
     return (
-        <div className="bg-yellow-500 w-1/4">
-            <h1>stats</h1>
+        <div className="w-[960px] mx-10 mt-20">
+            <h1>Lives: {props.lives} WPM: ... Time: ... </h1>
         </div>
     );
 }
 
-export default Stats;
+export default Stats; 
