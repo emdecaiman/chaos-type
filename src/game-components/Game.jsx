@@ -1,21 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { generate } from "random-words";
 import { v4 as uuidv4 } from 'uuid';
 import Stats from "./Stats.jsx";
 import List from "./List.jsx";
+import EndGame from "./EndGame.jsx";
 
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [input, setInput] = useState("");
     const [lives, setLives] = useState(3);
-    
+    const [isEnd, setIsEnd] = useState(false);
+
     useEffect(() => {
         if (lives > 0) {
             const id = setInterval(() => {
                 addWord();
             }, 1000);
             return () => clearInterval(id);
+        } else {
+            endGame();
         }
+
     }, [wordList]); // interval resets everytime wordList changes
 
     const addWord = () => {
@@ -41,6 +46,16 @@ const Game = () => {
         }
     }
 
+    const endGame = () => {
+        setWordList(prevWordList => {
+            prevWordList.forEach(word => clearTimeout(word.timerId));
+
+            return wordList;
+        })
+
+        setIsEnd(true);
+    }
+
     const removeWordByTimeout = (wordToRemove) => {
         clearTimeout(wordToRemove.timerId);
 
@@ -59,10 +74,11 @@ const Game = () => {
         <>
             <div className="flex flex-col items-center">
                 <Stats lives={lives}/>
-                <div className="h-[640px] w-[960px] my-5">
-                    <div className="h-[640px] relative bg-white bg-opacity-5 shadow-2xl">
+                <div className="h-[640px] w-[960px] my-5 relative">
+                    <div className="h-[640px] px-20 py-5 relative bg-white bg-opacity-5 shadow-2xl">
                         <List wordList={wordList} />
                     </div>
+                    <EndGame isEnd={isEnd} />
                 </div>
                 <input
                     className="text-black mx-10 mb-5 w-[960px]"
