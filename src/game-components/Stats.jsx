@@ -19,10 +19,10 @@ const Stats = (props) => {
 
     // initialize when game starts
     useEffect(() => {
-        if (props.lives == 3 && props.wordList == 0) {
+        if (props.lives == 3) {
             setStartTime(Date.now());
         }
-    }, [props.lives, props.wordList])
+    }, [props.lives])
 
     // update wpm
     useEffect(() => {
@@ -36,7 +36,7 @@ const Stats = (props) => {
 
     return (
         <div className="w-[960px] mx-10 mt-20">
-            <h1>Lives: {props.lives} Words: {props.wordCount} WPM: {wpm}</h1>
+            <h1>Lives: {props.lives} Words: {props.wordCount} WPM: {wpm} Speed: {props.speed}</h1>
             <Timer time={time} />
         </div>
     );

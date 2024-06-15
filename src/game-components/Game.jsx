@@ -11,7 +11,7 @@ const Game = () => {
     const [lives, setLives] = useState(3);
     const [isEnd, setIsEnd] = useState(false);
     const [wordCount, setWordCount] = useState(0);
-    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(1500);
+    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(1000);
 
     // add words every second
     useEffect(() => {
@@ -24,16 +24,16 @@ const Game = () => {
             endGame();
         }
 
-    }, [lives]); // interval resets everytime wordList changes
+    }, [lives, wordGeneratedSpeed]); // interval resets everytime wordList changes
 
     useEffect(() => {
         if (wordCount != 0 && wordCount % 10 == 0 ) {
             if (wordGeneratedSpeed <= 1000) {
-                setWordGeneratedSpeed(prevSpeed => prevSpeed -= 50);
+                setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
+
             } else {
-                setWordGeneratedSpeed(prevSpeed => prevSpeed -= 100);
+                setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
             }
-            // console.log(`Word generation speed adjusted to ${wordGeneratedSpeed}ms`); investigate later
         }
     }, [wordCount])
 
@@ -87,7 +87,7 @@ const Game = () => {
     return (
         <>
             <div className="flex flex-col items-center">
-                <Stats lives={lives} wordCount={wordCount} isEnd={isEnd} wordList={wordList}/>
+                <Stats lives={lives} wordCount={wordCount} isEnd={isEnd} wordList={wordList} speed={wordGeneratedSpeed}/>
                 <div className="h-[640px] w-[960px] my-5 relative">
                     <div className="h-[640px] px-20 py-5 relative bg-white bg-opacity-5 shadow-2xl">
                         <List wordList={wordList} isEnd={isEnd}/>
