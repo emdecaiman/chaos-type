@@ -7,6 +7,7 @@ const List = (props) => {
                             word={word.text}
                             x={word.x} 
                             y={word.y}
+                            isEnd={props.isEnd}
                         />;
             })}
         </div>
@@ -21,8 +22,12 @@ const ListItem = (props) => {
                 top: `${props.y}%`, // Template literals are string literals that allow embedded expressions.
                 left: `${props.x}%`,
             }}
-        >
-            <div className="animate-zoominout">
+            >
+
+            <div 
+                className="animate-zoominout"
+                style={{animationPlayState: props.isEnd ? 'paused' : 'running'}}
+                >
                 {props.word}
             </div>
         </div>

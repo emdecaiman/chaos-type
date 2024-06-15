@@ -11,7 +11,7 @@ export default {
       },
       // https://www.30secondsofcode.org/css/s/zoomin-zoomout-animation/
       animation: {
-        zoominout: "zoominout 5s ease infinite",
+        zoominout: "zoominout 10s ease",
       },
       keyframes: {
         zoominout: {
