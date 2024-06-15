@@ -4,27 +4,28 @@ import { v4 as uuidv4 } from 'uuid';
 import Stats from "./Stats.jsx";
 import List from "./List.jsx";
 import EndGame from "./EndGame.jsx";
+import StartGame from "./StartGame.jsx";
 
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [input, setInput] = useState("");
     const [lives, setLives] = useState(3);
-    const [isEnd, setIsEnd] = useState(false);
+    const [gameState, setGameState] = useState("start");
     const [wordCount, setWordCount] = useState(0);
-    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(1000);
+    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(1500);
 
     // add words every second
     useEffect(() => {
-        if (lives > 0) {
+        if (lives > 0 && gameState == "running") {
             const id = setInterval(() => {
                 addWord();
             }, wordGeneratedSpeed);
             return () => clearInterval(id);
-        } else {
+        } else if (lives <= 0) {
             endGame();
         }
 
-    }, [lives, wordGeneratedSpeed]); // interval resets everytime wordList changes
+    }, [lives, wordGeneratedSpeed, gameState]); // interval resets everytime wordList changes
 
     useEffect(() => {
         if (wordCount != 0 && wordCount % 10 == 0 ) {
@@ -66,7 +67,7 @@ const Game = () => {
             return wordList;
         })
 
-        setIsEnd(true);
+        setGameState("end");
     }
 
     const removeWordByTimeout = (wordToRemove) => {
@@ -83,19 +84,24 @@ const Game = () => {
         setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemoveObj.id));
         setWordCount(prevWordCount => prevWordCount + 1);
     }
+
+    const handleStartGame = () => {
+        setGameState("running");
+    }
     
     return (
         <>
             <div className="flex flex-col items-center">
-                <Stats lives={lives} wordCount={wordCount} isEnd={isEnd} wordList={wordList} speed={wordGeneratedSpeed}/>
-                <div className="h-[640px] w-[960px] my-5 relative">
-                    <div className="h-[640px] px-20 py-5 relative bg-white bg-opacity-5 shadow-2xl">
-                        <List wordList={wordList} isEnd={isEnd}/>
+                <Stats lives={lives} wordCount={wordCount} gameState={gameState} wordList={wordList} speed={wordGeneratedSpeed}/>
+                <div className="h-[640px] w-[960px] my-5 relative rounded-xl">
+                    <StartGame gameState={gameState} onStart={handleStartGame}/>
+                    <div className="h-full w-full px-20 py-5 bg-white bg-opacity-5 shadow-2xl">
+                        <List wordList={wordList} gameState={gameState}/>
                     </div>
-                    <EndGame isEnd={isEnd} />
+                    <EndGame gameState={gameState} />
                 </div>
                 <input
-                    className="text-black mx-10 mb-5 w-[960px]"
+                    className="input input-bordered rounded-xl text-black mx-10 mb-5 w-[960px]"
                     value={input} 
                     onChange={e => setInput(e.target.value.trim())} 
                     onKeyDown={checkInputIsValid} 

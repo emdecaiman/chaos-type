@@ -7,7 +7,7 @@ const List = (props) => {
                             word={word.text}
                             x={word.x} 
                             y={word.y}
-                            isEnd={props.isEnd}
+                            gameState={props.gameState}
                         />;
             })}
         </div>
@@ -26,7 +26,7 @@ const ListItem = (props) => {
 
             <div 
                 className="animate-zoominout"
-                style={{animationPlayState: props.isEnd ? 'paused' : 'running'}}
+                style={{animationPlayState: props.gameState == "end" ? 'paused' : 'running'}}
                 >
                 {props.word}
             </div>

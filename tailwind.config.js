@@ -14,17 +14,6 @@ export default {
         zoominout: "zoominout 10s ease-in-out",
       },
       keyframes: {
-        // zoominout: {
-        //   "0%": {
-        //     transform: "scale(0)",
-        //   },
-        //   "50%": {
-        //     transform: "scale(1)",
-        //   },
-        //   "100%": {
-        //     transform: "scale(0)",
-        //   },
-        // }
         zoominout: {
           "0%": {
             transform: "scale(1)",
@@ -39,7 +28,9 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require("daisyui"),
+  ],
 }
 
 

@@ -9,13 +9,13 @@ const Stats = (props) => {
     // game timer
     useEffect(() => {
         let interval = null;
-        if (!props.isEnd) {
+        if (props.gameState == "running") {
             interval = setInterval(() => {
                 setTime(prevTime => prevTime + 10)
             }, 10)
         }
         return () => clearInterval(interval)        
-    }, [props.isEnd])
+    }, [props.gameState])
 
     // initialize when game starts
     useEffect(() => {
