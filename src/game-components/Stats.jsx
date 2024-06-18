@@ -21,6 +21,8 @@ const Stats = (props) => {
     useEffect(() => {
         if (props.lives == 3) {
             setStartTime(Date.now());
+            setTime(0);
+            setWpm(0);
         }
     }, [props.lives])
 
@@ -36,8 +38,15 @@ const Stats = (props) => {
 
     return (
         <div className="w-[960px] mx-10 mt-20">
-            <h1>Lives: {props.lives} Words: {props.wordCount} WPM: {wpm} Speed: {props.speed}</h1>
-            <Timer time={time} />
+            <div className="flex justify-between">
+                <div className="flex gap-6">
+                    <Timer time={time} />
+                    <h1>Words: {props.wordCount} </h1>
+                    <h1>WPM: {wpm}</h1>
+                    <h1>Speed: {props.speed}</h1>
+                </div>
+                <h1>Lives: {props.lives}</h1>
+            </div>
         </div>
     );
 }
