@@ -44,6 +44,7 @@ const Stats = (props) => {
                     <h1>Words: {props.wordCount} </h1>
                     <h1>WPM: {wpm}</h1>
                     <h1>Speed: {props.speed}</h1>
+                    <h1>Level: {props.level}</h1>
                 </div>
                 <h1>Lives: {props.lives}</h1>
             </div>

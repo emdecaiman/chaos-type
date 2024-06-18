@@ -12,7 +12,8 @@ const Game = () => {
     const [lives, setLives] = useState(3);
     const [gameState, setGameState] = useState("start");
     const [wordCount, setWordCount] = useState(0);
-    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(1100);
+    const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
+    const [level, setLevel] = useState(1);
 
     // add words every second
     useEffect(() => {
@@ -32,16 +33,20 @@ const Game = () => {
         if (wordGeneratedSpeed <= 1000) {
             if (wordCount != 0 && wordCount % 10 == 0) {
                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 25);
-            } 
+                setLevel(prevLevel = prevLevel + 1);
+            }
         } else {
             if (wordCount != 0 && wordCount % 5 == 0) {
                 if (wordGeneratedSpeed <= 1500) {
                     setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
+                    setLevel(prevLevel = prevLevel + 1);
                 } else if (wordGeneratedSpeed <= 2000) {
                     setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
-                } else {
-                    setWordGeneratedSpeed(prevSpeed => prevSpeed - 200);
+                    setLevel(prevLevel = prevLevel + 1);
                 }
+                // } else {
+                //     setWordGeneratedSpeed(prevSpeed => prevSpeed - 200);
+                // }
             }
         }
     }, [wordCount]);
@@ -54,7 +59,7 @@ const Game = () => {
             x: Math.random() * 100,
             timerId: setTimeout(() => {
                 removeWordByTimeout(newWord);
-            }, 10000)
+            }, 12000)
         };
 
         setWordList(prevWordList => [...prevWordList, newWord]);
@@ -91,7 +96,8 @@ const Game = () => {
         setWordList([]);
         setLives(3);
         setWordCount(0);
-        setWordGeneratedSpeed(1000);
+        setWordGeneratedSpeed(2000);
+        setLevel(1);
     }
 
     const handleRemoveWord = (wordToRemoveObj) => {
@@ -101,17 +107,31 @@ const Game = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center">
-                <Stats lives={lives} wordCount={wordCount} gameState={gameState} wordList={wordList} speed={wordGeneratedSpeed} />
-                <div className="h-[640px] w-[960px] my-5 relative rounded-xl">
-                    <StartGame gameState={gameState} onStart={handleStartGame} />
-                    <div className="h-full w-full px-20 py-5 bg-white bg-opacity-5 shadow-2xl">
-                        <List wordList={wordList} gameState={gameState} />
-                    </div>
-                    <EndGame gameState={gameState} onRestart={handleRestartGame} />
-                </div>
-                <Input wordList={wordList} handleRemoveWord={handleRemoveWord} gameState={gameState} />
+            <div className="block min-[960px]:hidden text-center mt-20">
+                <p className="text-lg font-bold text-red-500">Game not available on screens less than 960px wide.</p>
             </div>
+            <div className="hidden min-[960px]:block">
+                <div className="flex flex-col items-center">
+                    <Stats lives={lives} wordCount={wordCount} gameState={gameState} wordList={wordList} speed={wordGeneratedSpeed} level={level}/>
+                    <div className="h-[640px] w-[960px] my-5 relative rounded-xl">
+                        <StartGame gameState={gameState} onStart={handleStartGame} />
+                        <div className="h-full w-full px-20 py-5 bg-white bg-opacity-5 border border-gray-600 rounded-xl shadow-2xl">
+                            <List wordList={wordList} gameState={gameState} />
+                        </div>
+                        <EndGame gameState={gameState} onRestart={handleRestartGame} />
+                    </div>
+                    <Input wordList={wordList} handleRemoveWord={handleRemoveWord} gameState={gameState} />
+                </div>
+            </div>
+            <div className="block text-center max-w-[960px] mt-20 mx-auto">
+                <h1 className="font-bold mb-5">How To Play!</h1>
+                <p>Chaos Type is designed as a fast-paced typing exercise aimed to improve your typing skills and reaction time. 
+                    Words will randomly appear on the game screen, and your objective is to type them correctly before
+                    they disappear. You begin the game with three lives, and the game speeds up as you progress. If you lose all your
+                    lives, the game ends.
+                </p>
+            </div>
+
         </>
     );
 }

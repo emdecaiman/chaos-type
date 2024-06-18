@@ -1,6 +1,6 @@
 const List = (props) => {
     return (
-        <div className="relative w-full h-full ">
+        <div className="relative w-full h-full">
             {props.wordList.map((word) =>{
                 return <ListItem 
                             key={word.id} 

@@ -43,7 +43,7 @@ const Input = (props) => {
 
     return (
         <input
-            className={`input input-bordered rounded-xl text-black mx-10 mb-5 w-[960px] ${incorrectInput ? 'animate-wiggle' : 'none'}`}
+            className={`input input-bordered input-sm rounded-xl text-black mx-10 mb-5 w-64 ${incorrectInput ? 'input-error animate-wiggle' : 'none'}`}
             value={input}
             onChange={e => setInput(e.target.value.trim())}
             onKeyDown={checkInputIsValid}
