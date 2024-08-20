@@ -15,7 +15,7 @@ const Game = () => {
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
     const [level, setLevel] = useState(1);
 
-    // add words every second
+    // add words every two second
     useEffect(() => {
         if (lives > 0 && gameState == "running") {
             const id = setInterval(() => {
@@ -33,16 +33,16 @@ const Game = () => {
         if (wordGeneratedSpeed <= 1000) {
             if (wordCount != 0 && wordCount % 10 == 0) {
                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 25);
-                setLevel(prevLevel = prevLevel + 1);
+                setLevel(prevLevel => prevLevel + 1);
             }
         } else {
             if (wordCount != 0 && wordCount % 5 == 0) {
                 if (wordGeneratedSpeed <= 1500) {
                     setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
-                    setLevel(prevLevel = prevLevel + 1);
+                    setLevel(prevLevel => prevLevel + 1);
                 } else if (wordGeneratedSpeed <= 2000) {
                     setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
-                    setLevel(prevLevel = prevLevel + 1);
+                    setLevel(prevLevel => prevLevel + 1);
                 }
                 // } else {
                 //     setWordGeneratedSpeed(prevSpeed => prevSpeed - 200);
@@ -58,7 +58,7 @@ const Game = () => {
             y: Math.random() * 100,
             x: Math.random() * 100,
             timerId: setTimeout(() => {
-                removeWordByTimeout(newWord);
+                removeWordsByTimeout();
             }, 12000)
         };
 
@@ -74,13 +74,19 @@ const Game = () => {
         setGameState("end");
     }
 
-    const removeWordByTimeout = (wordToRemove) => {
-        clearTimeout(wordToRemove.timerId);
+    // const removeWordByTimeout = (wordToRemove) => {
+    //     clearTimeout(wordToRemove.timerId);
 
-        // functional updates ensure we are working with latest state values
-        setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemove.id));
+    //     // functional updates ensure we are working with latest state values
+    //     setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemove.id));
+    //     setLives(prevLives => prevLives - 1);
+    // }
+    const removeWordsByTimeout = () => {
+        setWordList(prevWordList => {
+            prevWordList.forEach(word => clearTimeout(word.timerId)); // clear prev words timer
+            return [];
+        })
         setLives(prevLives => prevLives - 1);
-
     }
 
     //
@@ -127,8 +133,8 @@ const Game = () => {
                 <h1 className="font-bold mb-5">How To Play!</h1>
                 <p>Chaos Type is designed as a fast-paced typing exercise aimed to improve your typing skills and reaction time. 
                     Words will randomly appear on the game screen, and your objective is to type them correctly before
-                    they disappear. You begin the game with three lives, and the game speeds up as you progress. If you lose all your
-                    lives, the game ends.
+                    they disappear. To play, type the word in the input box and hit either 'space' or 'enter' to remove it.
+                    You start with three lives, and the game speeds up as you progress. Losing all lives results in game over.
                 </p>
             </div>
 
