@@ -6,18 +6,19 @@ import List from "./List.jsx";
 import EndGame from "./EndGame.jsx";
 import StartGame from "./StartGame.jsx";
 import Input from "./Input.jsx";
+import { GAME_STATES } from "../constants.js";
 
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [lives, setLives] = useState(3);
-    const [gameState, setGameState] = useState("start");
+    const [gameState, setGameState] = useState(GAME_STATES.START);
     const [wordCount, setWordCount] = useState(0);
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
     const [level, setLevel] = useState(1);
 
     // add words every two second
     useEffect(() => {
-        if (lives > 0 && gameState == "running") {
+        if (lives > 0 && gameState == GAME_STATES.RUNNING) {
             const id = setInterval(() => {
                 addWord();
             }, wordGeneratedSpeed);
@@ -26,7 +27,7 @@ const Game = () => {
             endGame();
         }
 
-    }, [lives, wordGeneratedSpeed, gameState]); // interval resets everytime wordList changes
+    }, [lives, wordGeneratedSpeed, gameState]);
 
     // speeds up word generation
     useEffect(() => {
@@ -71,16 +72,9 @@ const Game = () => {
             return wordList;
         })
 
-        setGameState("end");
+        setGameState(GAME_STATES.END);
     }
 
-    // const removeWordByTimeout = (wordToRemove) => {
-    //     clearTimeout(wordToRemove.timerId);
-
-    //     // functional updates ensure we are working with latest state values
-    //     setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemove.id));
-    //     setLives(prevLives => prevLives - 1);
-    // }
     const removeWordsByTimeout = () => {
         setWordList(prevWordList => {
             prevWordList.forEach(word => clearTimeout(word.timerId)); // clear prev words timer
@@ -94,11 +88,11 @@ const Game = () => {
     //
     const handleStartGame = () => {
 
-        setGameState("running");
+        setGameState(GAME_STATES.RUNNING);
     }
 
     const handleRestartGame = () => {
-        setGameState("running");
+        setGameState(GAME_STATES.RUNNING);
         setWordList([]);
         setLives(3);
         setWordCount(0);

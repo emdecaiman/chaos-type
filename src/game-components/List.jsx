@@ -24,10 +24,7 @@ const ListItem = (props) => {
             }}
             >
 
-            <div 
-                className="animate-zoominout"
-                style={{animationPlayState: props.gameState == "end" ? 'paused' : 'running'}}
-                >
+            <div className="animate-zoominout">
                 {props.word}
             </div>
         </div>

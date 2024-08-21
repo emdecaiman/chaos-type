@@ -1,5 +1,7 @@
+import { GAME_STATES } from "../constants";
+
 const EndGame = (props) => {
-    if (props.gameState == "end") {
+    if (props.gameState == GAME_STATES.END) {
         return (
             <div className="backdrop-blur-sm h-full w-full top-0 left-0 block absolute">
                 <button

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Timer from "./Timer";
+import { GAME_STATES } from "../constants";
 
 const Stats = (props) => {
     const [time, setTime] = useState(0);
@@ -9,7 +10,7 @@ const Stats = (props) => {
     // game timer
     useEffect(() => {
         let interval = null;
-        if (props.gameState == "running") {
+        if (props.gameState == GAME_STATES.RUNNING) {
             interval = setInterval(() => {
                 setTime(prevTime => prevTime + 10)
             }, 10)

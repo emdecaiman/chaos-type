@@ -22,7 +22,7 @@ const Input = (props) => {
         props.handleRemoveWord(wordToRemoveObj)
     }
     
-    // reset input flag
+    // reset incorrect input flag after .1 sec, that is the error animation will trigger for .1 sec
     useEffect(() => {
         if (incorrectInput) {
             const timer = setTimeout(() => {
@@ -33,13 +33,22 @@ const Input = (props) => {
         }
     }, [incorrectInput]);
 
+    // // when game is is running state, reset the input text and focus on the input box
+    // useEffect(() => {
+    //     if (props.gameState == "running") {
+    //         setInput("");
+    //         inputRef.current.focus();
+    //     }
+    // }, [props.gameState])
 
-    useEffect(() => {
-        if (props.gameState == "running") {
-            setInput("");
-            inputRef.current.focus();
-        }
-    }, [props.gameState])
+    // https://react.dev/learn/you-might-not-need-an-effect
+    // Adjusting some state when a prop changes
+    const [prevGameState, setPrevGameState] = useState(props.gameState);
+    if (props.gameState !== prevGameState) {
+        setPrevGameState(props.gameState)
+        setInput("");
+        inputRef.current.focus();
+    }
 
     return (
         <input
