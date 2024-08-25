@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 const Input = (props) => {
     const [input, setInput] = useState("");
     const [incorrectInput, setIncorrectInput] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const inputRef = useRef(null);
 
     const checkInputIsValid = (event) => {
@@ -34,21 +35,15 @@ const Input = (props) => {
     }, [incorrectInput]);
 
     // // when game is is running state, reset the input text and focus on the input box
-    // useEffect(() => {
-    //     if (props.gameState == "running") {
-    //         setInput("");
-    //         inputRef.current.focus();
-    //     }
-    // }, [props.gameState])
-
-    // https://react.dev/learn/you-might-not-need-an-effect
-    // Adjusting some state when a prop changes
-    const [prevGameState, setPrevGameState] = useState(props.gameState);
-    if (props.gameState !== prevGameState) {
-        setPrevGameState(props.gameState)
-        setInput("");
-        inputRef.current.focus();
-    }
+    useEffect(() => {
+        if (props.gameState == "running") {
+            setInput("");
+            setDisabled(false);
+            inputRef.current.focus();
+        } else {
+            setDisabled(true);
+        }
+    }, [props.gameState, disabled])
 
     return (
         <input
@@ -58,6 +53,7 @@ const Input = (props) => {
             onKeyDown={checkInputIsValid}
             type="text"
             placeholder="Type Here"
+            disabled={disabled}
             ref={inputRef} // react sets 'current' property of the ref object to this DOM node
         />
     )
