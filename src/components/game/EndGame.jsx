@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { GAME_STATES } from "../constants";
+import { GAME_STATES } from "../utils/constants";
 import Timer from "./Timer";
 
 
 const EndGame = (props) => {
     const [user, setUser] = useState("");
-    const [scoreSubmitted, setScoreSubmitted] = useState(false);
     const highScores = JSON.parse(localStorage.getItem("highScores")) || []; // if null return []
 
     const handleInputChange = (e) => {
@@ -24,17 +23,18 @@ const EndGame = (props) => {
         highScores.sort((a, b) => b.words - a.words);
         highScores.splice(10);
         localStorage.setItem("highScores", JSON.stringify(highScores));
-        setScoreSubmitted(true);
+        props.setScoreSubmitted(true);
+        setUser("");
     }
 
     if (props.gameState === GAME_STATES.END) {
-        if (scoreSubmitted) {
+        if (props.scoreSubmitted) {
             return (
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-2 p-6 bg-gray-600 rounded-xl w-80">
+                    <div className="flex flex-col items-center gap-5 p-6 bg-gray-600 rounded-xl w-80">
                         <h1 className="text-xl">Score Submitted</h1>
                         <button
-                            className="btn btn-neutral btn-active rounded-xl w-60"
+                            className="btn btn-neutral btn-active rounded-xl w-60 text-white"
                             onClick={props.onRestart}>
                             Restart
                         </button>
@@ -58,13 +58,13 @@ const EndGame = (props) => {
                             placeholder="Enter your name"
                         />
                         <button
-                            className="btn btn-neutral btn-active rounded-xl mb-5 w-60"
+                            className="btn btn-neutral btn-active rounded-xl mb-5 w-60 text-white"
                             onClick={submitScore}
                         >
                             Submit Score
                         </button>
                         <button
-                            className="btn btn-neutral btn-active rounded-xl w-60"
+                            className="btn btn-neutral btn-active rounded-xl w-60 text-white"
                             onClick={props.onRestart}>
                             Restart
                         </button>

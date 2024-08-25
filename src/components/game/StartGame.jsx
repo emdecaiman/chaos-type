@@ -1,4 +1,4 @@
-import { GAME_STATES } from "../constants";
+import { GAME_STATES } from "../utils/constants";
 
 const StartGame = (props) => {
     if (props.gameState == GAME_STATES.START) {

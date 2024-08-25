@@ -11,6 +11,7 @@ const Input = (props) => {
             if (props.wordList.some(word => word.text === input)) {
                 removeWordByCorrectInput(input);
                 setInput("");
+                props.handleWordCountChange(props.wordCount + 1);
             } else {
                 setIncorrectInput(true);
             }

@@ -6,20 +6,21 @@ import List from "./List.jsx";
 import EndGame from "./EndGame.jsx";
 import StartGame from "./StartGame.jsx";
 import Input from "./Input.jsx";
-import { GAME_STATES } from "../constants.js";
+import { GAME_STATES } from "..//utils/constants.js";
 
 const Game = () => {
     const [wordList, setWordList] = useState([]);
-    const [lives, setLives] = useState(1);
-    const [gameState, setGameState] = useState(GAME_STATES.END);
-
+    const [lives, setLives] = useState(3);
+    const [gameState, setGameState] = useState(GAME_STATES.START);
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
+
+    const [scoreSubmitted, setScoreSubmitted] = useState(false);
 
     // stats
     const [wordCount, setWordCount] = useState(0);
     const [level, setLevel] = useState(1);
     const [time, setTime] = useState(0);
-    const [startTime, setStartTime] = useState();
+    const [startTime, setStartTime] = useState(0);
     const [wpm, setWpm] = useState(0);
 
     // add words every two second
@@ -35,28 +36,53 @@ const Game = () => {
 
     }, [lives, wordGeneratedSpeed, gameState]);
 
-    // speeds up word generation
-    useEffect(() => {
-        if (wordGeneratedSpeed <= 1000) {
-            if (wordCount != 0 && wordCount % 10 == 0) {
-                setWordGeneratedSpeed(prevSpeed => prevSpeed - 25);
-                setLevel(prevLevel => prevLevel + 1);
+    const handleWordCountChange = (newWordCount) => {
+        setWordCount(newWordCount);
+    
+        let newSpeed = wordGeneratedSpeed;
+        let newLevel = level;
+    
+        if (newSpeed <= 1000) {
+            if (newWordCount !== 0 && newWordCount % 10 === 0) {
+                newSpeed = newSpeed - 25;
+                newLevel = level + 1;
             }
         } else {
-            if (wordCount != 0 && wordCount % 5 == 0) {
-                if (wordGeneratedSpeed <= 1500) {
-                    setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
-                    setLevel(prevLevel => prevLevel + 1);
-                } else if (wordGeneratedSpeed <= 2000) {
-                    setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
-                    setLevel(prevLevel => prevLevel + 1);
+            if (newWordCount !== 0 && newWordCount % 5 === 0) {
+                if (newSpeed <= 1500) {
+                    newSpeed = newSpeed - 50;
+                    newLevel = level + 1;
+                } else if (newSpeed <= 2000) {
+                    newSpeed = newSpeed - 100;
+                    newLevel = level + 1;
                 }
-                // } else {
-                //     setWordGeneratedSpeed(prevSpeed => prevSpeed - 200);
-                // }
             }
         }
-    }, [wordCount]);
+    
+        setWordGeneratedSpeed(newSpeed);
+        setLevel(newLevel);
+    };
+
+    // // speeds up word generation
+    // useEffect(() => {
+    //     if (wordGeneratedSpeed <= 1000) {
+    //         if (wordCount != 0 && wordCount % 10 == 0) {
+    //             setWordGeneratedSpeed(prevSpeed => prevSpeed - 25);
+    //             setLevel(prevLevel => prevLevel + 1);
+    //         }
+    //     } else {
+    //         if (wordCount != 0 && wordCount % 5 == 0) {
+    //             if (wordGeneratedSpeed <= 1500) {
+    //                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
+    //                 setLevel(prevLevel => prevLevel + 1);
+    //             } else if (wordGeneratedSpeed <= 2000) {
+    //                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
+    //                 setLevel(prevLevel => prevLevel + 1);
+    //             }
+    //         }
+    //     }
+    //     console.log("word generation called")
+    // }, [wordCount]);
 
     const addWord = () => {
         const newWord = {
@@ -90,18 +116,18 @@ const Game = () => {
     }
 
     // initialize when game starts
-    useEffect(() => {
-        if (lives === 3) {
-            setStartTime(Date.now());
-            setTime(0);
-            setWpm(0);
-        }
-    }, [lives])
+    // useEffect(() => {
+    //     if (lives === 1) {
+    //         setStartTime(Date.now());
+    //         setTime(0);
+    //         setWpm(0);
+    //     }
+    // }, [lives])
 
     // game timer
     useEffect(() => {
         let interval = null;
-        if (gameState == GAME_STATES.RUNNING) {
+        if (gameState === GAME_STATES.RUNNING) {
             interval = setInterval(() => {
                 setTime(prevTime => prevTime + 10)
             }, 10)
@@ -123,17 +149,16 @@ const Game = () => {
     // functions passed to components
     //
     const handleStartGame = () => {
-
-        setGameState(GAME_STATES.RUNNING);
-    }
-
-    const handleRestartGame = () => {
-        setGameState(GAME_STATES.RUNNING);
         setWordList([]);
-        setLives(3);
-        setWordCount(0);
+        setLives(1);
+        setGameState(GAME_STATES.RUNNING);
+        setScoreSubmitted(false);
         setWordGeneratedSpeed(2000);
+        setWordCount(0);
         setLevel(1);
+        setTime(0);
+        setStartTime(Date.now());
+        setWpm(0);
     }
 
     const handleRemoveWord = (wordToRemoveObj) => {
@@ -168,9 +193,17 @@ const Game = () => {
                             time={time}
                             level={level}
                             gameState={gameState}
-                            onRestart={handleRestartGame} />
+                            scoreSubmitted={scoreSubmitted}
+                            setScoreSubmitted={setScoreSubmitted}
+                            onRestart={handleStartGame} />
                     </div>
-                    <Input wordList={wordList} handleRemoveWord={handleRemoveWord} gameState={gameState} />
+                    <Input 
+                        wordList={wordList} 
+                        handleRemoveWord={handleRemoveWord} 
+                        handleWordCountChange={handleWordCountChange}
+                        wordCount={wordCount}
+                        gameState={gameState} 
+                        />
                 </div>
             </div>
             <div className="text-center max-w-[960px] mt-20 mx-auto">

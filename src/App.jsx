@@ -1,13 +1,18 @@
-import Header from "./Header.jsx";
-import Game from "./game-components/Game.jsx";
-import Footer from "./Footer.jsx"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Leaderboard from "./pages/Leaderboard";
 
 const App = () => {
   return (
-    <div className="flex flex-col font-sourcecodepro bg-gray-600 text-white">
-      <Header />
-      <Game />
-      <Footer />
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Routes>
+      </BrowserRouter>
+
     </div>
   );
 }
