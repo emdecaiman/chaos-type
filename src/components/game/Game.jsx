@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { generate } from "random-words";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import Stats from "./Stats.jsx";
 import List from "./List.jsx";
 import EndGame from "./EndGame.jsx";
@@ -11,7 +11,7 @@ import { GAME_STATES } from "..//utils/constants.js";
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [lives, setLives] = useState(3);
-    const [gameState, setGameState] = useState(GAME_STATES.START);
+    const [gameState, setGameState] = useState(GAME_STATES.END);
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
 
     const [scoreSubmitted, setScoreSubmitted] = useState(false);
@@ -36,53 +36,6 @@ const Game = () => {
 
     }, [lives, wordGeneratedSpeed, gameState]);
 
-    const handleWordCountChange = (newWordCount) => {
-        setWordCount(newWordCount);
-    
-        let newSpeed = wordGeneratedSpeed;
-        let newLevel = level;
-    
-        if (newSpeed <= 1000) {
-            if (newWordCount !== 0 && newWordCount % 10 === 0) {
-                newSpeed = newSpeed - 25;
-                newLevel = level + 1;
-            }
-        } else {
-            if (newWordCount !== 0 && newWordCount % 5 === 0) {
-                if (newSpeed <= 1500) {
-                    newSpeed = newSpeed - 50;
-                    newLevel = level + 1;
-                } else if (newSpeed <= 2000) {
-                    newSpeed = newSpeed - 100;
-                    newLevel = level + 1;
-                }
-            }
-        }
-    
-        setWordGeneratedSpeed(newSpeed);
-        setLevel(newLevel);
-    };
-
-    // // speeds up word generation
-    // useEffect(() => {
-    //     if (wordGeneratedSpeed <= 1000) {
-    //         if (wordCount != 0 && wordCount % 10 == 0) {
-    //             setWordGeneratedSpeed(prevSpeed => prevSpeed - 25);
-    //             setLevel(prevLevel => prevLevel + 1);
-    //         }
-    //     } else {
-    //         if (wordCount != 0 && wordCount % 5 == 0) {
-    //             if (wordGeneratedSpeed <= 1500) {
-    //                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 50);
-    //                 setLevel(prevLevel => prevLevel + 1);
-    //             } else if (wordGeneratedSpeed <= 2000) {
-    //                 setWordGeneratedSpeed(prevSpeed => prevSpeed - 100);
-    //                 setLevel(prevLevel => prevLevel + 1);
-    //             }
-    //         }
-    //     }
-    //     console.log("word generation called")
-    // }, [wordCount]);
 
     const addWord = () => {
         const newWord = {
@@ -114,15 +67,6 @@ const Game = () => {
         })
         setLives(prevLives => prevLives - 1);
     }
-
-    // initialize when game starts
-    // useEffect(() => {
-    //     if (lives === 1) {
-    //         setStartTime(Date.now());
-    //         setTime(0);
-    //         setWpm(0);
-    //     }
-    // }, [lives])
 
     // game timer
     useEffect(() => {
@@ -165,6 +109,34 @@ const Game = () => {
         setWordList(prevWordList => prevWordList.filter(word => word.id !== wordToRemoveObj.id));
         setWordCount(prevWordCount => prevWordCount + 1);
     }
+
+    // speed up word generation and increase level logic
+    const handleWordCountChange = (newWordCount) => {
+        setWordCount(newWordCount);
+    
+        let newSpeed = wordGeneratedSpeed;
+        let newLevel = level;
+    
+        if (newSpeed <= 1000) {
+            if (newWordCount !== 0 && newWordCount % 10 === 0) {
+                newSpeed = newSpeed - 25;
+                newLevel = level + 1;
+            }
+        } else {
+            if (newWordCount !== 0 && newWordCount % 5 === 0) {
+                if (newSpeed <= 1500) {
+                    newSpeed = newSpeed - 50;
+                    newLevel = level + 1;
+                } else if (newSpeed <= 2000) {
+                    newSpeed = newSpeed - 100;
+                    newLevel = level + 1;
+                }
+            }
+        }
+    
+        setWordGeneratedSpeed(newSpeed);
+        setLevel(newLevel);
+    };
 
     return (
         <>

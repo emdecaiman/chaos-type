@@ -6,7 +6,7 @@ const Header = () => {
             <div>
                 <Link className="text-xl" to="/home">Chaos Type v2</Link>
             </div>
-            <div className="flex gap-5">
+            <div className="flex gap-10">
                 <Link to="/home">Play</Link>
                 <Link to="/leaderboard">Leaderboard</Link>
             </div>

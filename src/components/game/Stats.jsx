@@ -1,4 +1,4 @@
-import Timer from "./Timer";
+import Timer from "../common/Timer";
 
 const Stats = (props) => {
     return (
@@ -6,11 +6,23 @@ const Stats = (props) => {
             <div className="flex justify-between">
                 <div className="flex gap-6">
                     <Timer time={props.time} />
-                    <h1>Words: {props.wordCount} </h1>
-                    <h1>WPM: {props.wpm}</h1>
-                    <h1>Level: {props.level}</h1>
+                    <div className="flex">
+                        <span className="font-bold">Words:</span>
+                        <h1 className="ml-1">{props.wordCount} </h1>
+                    </div>
+                    <div className="flex">
+                        <span className="font-bold">WPM:</span>
+                        <h1 className="ml-1">{props.wpm} </h1>
+                    </div>
+                    <div className="flex">
+                        <span className="font-bold">Level: </span>
+                        <h1 className="ml-1">{props.level} </h1>
+                    </div>
                 </div>
-                <h1>Lives: {props.lives}</h1>
+                <div className="flex">
+                    <span className="font-bold">Lives:</span>
+                    <h1 className="ml-1">{props.lives} </h1>
+                </div>
             </div>
         </div>
     );

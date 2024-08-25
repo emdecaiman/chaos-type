@@ -1,11 +1,14 @@
 import Header from "../components/common/Header.jsx";
-import Footer from "../components/common/Footer.jsx"
+import Footer from "../components/common/Footer.jsx";
+import Scores from "../components/leaderboard/Scores.jsx";
 
 const Leaderboard = () => {
   return (
-    <div className="flex flex-col font-sourcecodepro bg-gray-600 text-white">
+    <div className="flex flex-col min-h-screen font-sourcecodepro bg-gray-800 text-white">
       <Header />
-      <h1>Leaderboard</h1>
+      <div className="flex-grow">
+        <Scores />
+      </div>
       <Footer />
     </div>
   );

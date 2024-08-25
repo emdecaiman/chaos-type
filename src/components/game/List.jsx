@@ -1,7 +1,7 @@
 const List = (props) => {
     return (
         <div className="relative w-full h-full">
-            {props.wordList.map((word) =>{
+            {props.wordList.map((word) => {
                 return <ListItem 
                             key={word.id} 
                             word={word.text}
@@ -28,8 +28,7 @@ const ListItem = (props) => {
                 {props.word}
             </div>
         </div>
-
-    )
+    );
 }
 
 export default List;

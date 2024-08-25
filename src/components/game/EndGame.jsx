@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GAME_STATES } from "../utils/constants";
-import Timer from "./Timer";
+import Timer from "../common/Timer";
 
 
 const EndGame = (props) => {
@@ -46,25 +46,25 @@ const EndGame = (props) => {
             return (
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-2 p-6 bg-gray-600 rounded-xl w-80">
-                        <h1 className="text-xl">Game Over</h1>
+                        <h1 className="text-xl font-bold">Game Over</h1>
                         <h1>Level: {props.level}</h1>
                         <Timer time={props.time} />
                         <h1>Words: {props.wordCount}</h1>
                         <input
-                            className="input input-bordered input-sm rounded-xl text-white mx-10 mb-1 w-60"
+                            className="input input-bordered input-sm rounded-xl bg-white text-black mx-10 mb-1 w-60"
                             type="text"
                             value={user}
                             onChange={handleInputChange}
                             placeholder="Enter your name"
                         />
                         <button
-                            className="btn btn-neutral btn-active rounded-xl mb-5 w-60 text-white"
+                            className="btn btn-neutral btn-active rounded-xl mb-5 w-60 text-white bg-blue-600 hover:bg-blue-800 border-none"
                             onClick={submitScore}
                         >
                             Submit Score
                         </button>
                         <button
-                            className="btn btn-neutral btn-active rounded-xl w-60 text-white"
+                            className="btn btn-neutral btn-active rounded-xl w-60 text-white bg-blue-600 hover:bg-blue-800 border-none"
                             onClick={props.onRestart}>
                             Restart
                         </button>
