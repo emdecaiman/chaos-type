@@ -2,11 +2,13 @@
 
 # Play the Game
 
-link
+Deployed using Vercel
+
+[chaos-type-v2.vercel.app](https://chaos-type-v2.vercel.app/)
 
 # About
 
-Chaos Type v2 is an improved version of of the orginal "Chaos Type" game , which was initially developed during SystemsHack 2024, where it won the Chaos Chefs Award (https://devpost.com/software/chaos-keys). It was a beginner friendly, twelve-hour Hackathon I participated in.
+Chaos Type v2 is an improved version of of the orginal "Chaos Type" game , which was initially developed during SystemsHack 2024, where it won the Chaos Chefs Award ([devpost.com/software/chaos-keys](https://devpost.com/software/chaos-keys). It was a beginner friendly, twelve-hour Hackathon I participated in.
 
 # Features
 
