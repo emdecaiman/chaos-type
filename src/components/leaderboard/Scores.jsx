@@ -2,28 +2,40 @@ import { v4 as uuidv4 } from "uuid";
 import Timer from "../common/Timer"
 
 const Scores = () => {
-    const scores = JSON.parse(localStorage.getItem("highScores"));
+    const scores = JSON.parse(localStorage.getItem("highScores")) || [];
 
-    return (
-        <div className="flex justify-center items-center pt-10">
-            <div className="flex flex-col p-5 items-center bg-gray-600 w-min rounded-xl">
-                <h1 className="text-xl font-bold">Leaderboard</h1>
-                <ol className="list-decimal list">
-                    {scores.map((score) => {
-                        return (
-                            <ScoreItem
-                                key={uuidv4()}
-                                user={score.user}
-                                level={score.level}
-                                wordCount={score.wordCount}
-                                time={score.time}
-                            />
-                        );
-                    })}
-                </ol>
+    if (scores.length === 0) {
+        return (
+            <div className="flex justify-center items-center pt-20">
+                <div className="flex flex-col p-5 items-center bg-gray-600 w-[650px] rounded-xl">
+                    <h1 className="text-xl font-bold">Leaderboard</h1>
+                    <h1>No scores are submitted</h1>
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className="flex justify-center items-center pt-20">
+                <div className="flex flex-col p-5 items-center bg-gray-600 w-[650px] rounded-xl">
+                    <h1 className="text-xl font-bold">Leaderboard</h1>
+                    <ol className="list-decimal list">
+                        {scores.map((score) => {
+                            return (
+                                <ScoreItem
+                                    key={uuidv4()}
+                                    user={score.user}
+                                    level={score.level}
+                                    wordCount={score.wordCount}
+                                    time={score.time}
+                                />
+                            );
+                        })}
+                    </ol>
+                </div>
+            </div>
+        );
+    }
+
 }
 
 const ScoreItem = (props) => {

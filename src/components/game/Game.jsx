@@ -11,7 +11,7 @@ import { GAME_STATES } from "..//utils/constants.js";
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [lives, setLives] = useState(3);
-    const [gameState, setGameState] = useState(GAME_STATES.END);
+    const [gameState, setGameState] = useState(GAME_STATES.START);
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
 
     const [scoreSubmitted, setScoreSubmitted] = useState(false);
@@ -94,7 +94,7 @@ const Game = () => {
     //
     const handleStartGame = () => {
         setWordList([]);
-        setLives(1);
+        setLives(3);
         setGameState(GAME_STATES.RUNNING);
         setScoreSubmitted(false);
         setWordGeneratedSpeed(2000);
@@ -157,7 +157,7 @@ const Game = () => {
                     />
                     <div className="h-[640px] w-[960px] my-5 relative rounded-xl">
                         <StartGame gameState={gameState} onStart={handleStartGame} />
-                        <div className="h-full w-full px-20 py-5 bg-white bg-opacity-5 border border-gray-600 rounded-xl shadow-2xl">
+                        <div className="h-full w-full px-20 py-5 bg-white bg-opacity-5 rounded-xl shadow-2xl">
                             <List wordList={wordList} gameState={gameState} />
                         </div>
                         <EndGame
@@ -178,15 +178,6 @@ const Game = () => {
                         />
                 </div>
             </div>
-            <div className="text-center max-w-[960px] mt-20 mx-auto">
-                <h1 className="font-bold mb-5">How To Play!</h1>
-                <p>Chaos Type is designed as a fast-paced typing exercise aimed to improve your typing skills and reaction time.
-                    Words will randomly appear on the game screen, and your objective is to type them correctly before
-                    they disappear. To play, type the word in the input box and hit either 'space' or 'enter' to remove it.
-                    You start with three lives, and the game speeds up as you progress. Losing all lives results in game over.
-                </p>
-            </div>
-
         </>
     );
 }
