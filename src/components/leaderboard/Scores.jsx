@@ -25,7 +25,7 @@ const Scores = () => {
                                     key={uuidv4()}
                                     user={score.user}
                                     level={score.level}
-                                    wordCount={score.wordCount}
+                                    wordCount={score.words}
                                     time={score.time}
                                 />
                             );

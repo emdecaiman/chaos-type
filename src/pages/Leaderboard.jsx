@@ -10,7 +10,7 @@ const Leaderboard = () => {
   return (
     <div className="flex flex-col min-h-screen font-sourcecodepro bg-gray-800 text-white">
       <Header aboutSectionRef={aboutSection}/>
-      <div className="flex-grow">
+      <div className="h-screen flex flex-col justify-between">
         <Scores />
         <About aboutSectionRef={aboutSection}/>
       </div>
