@@ -17,8 +17,8 @@ const Scores = () => {
         return (
             <div className="flex justify-center items-center pt-20">
                 <div className="flex flex-col p-5 items-center bg-gray-600 w-[650px] rounded-xl">
-                    <h1 className="text-xl font-bold">Leaderboard</h1>
-                    <ol className="list-decimal list">
+                    <h1 className="text-xl font-bold">Top 10 Scores</h1>
+                    <ol className="list-decimal list-inside">
                         {scores.map((score) => {
                             return (
                                 <ScoreItem
@@ -56,7 +56,6 @@ const ScoreItem = (props) => {
                 <span className="ml-1 w-10">{props.wordCount}</span>
             </div>
             <Timer time={props.time} />
-
         </li>
     );
 }

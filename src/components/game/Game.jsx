@@ -11,7 +11,7 @@ import { GAME_STATES } from "..//utils/constants.js";
 const Game = () => {
     const [wordList, setWordList] = useState([]);
     const [lives, setLives] = useState(3);
-    const [gameState, setGameState] = useState(GAME_STATES.START);
+    const [gameState, setGameState] = useState(GAME_STATES.END);
     const [wordGeneratedSpeed, setWordGeneratedSpeed] = useState(2000);
 
     const [scoreSubmitted, setScoreSubmitted] = useState(false);
