@@ -1,10 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 
+const correctSound = new Audio("../../../public/osu-hit-sound.mp3");
+const missSound = new Audio("../../../public/miss-sound.wav");
+
 const Input = (props) => {
     const [input, setInput] = useState("");
     const [incorrectInput, setIncorrectInput] = useState(false);
     const [disabled, setDisabled] = useState(true);
     const inputRef = useRef(null);
+
+    const playSound = (sound) => {
+        sound.currentTime = 0;
+        sound.play();
+    }
 
     const checkInputIsValid = (event) => {
         if (event.keyCode === 32 || event.keyCode === 13) {
@@ -12,8 +20,11 @@ const Input = (props) => {
                 removeWordByCorrectInput(input);
                 setInput("");
                 props.handleWordCountChange(props.wordCount + 1);
+                playSound(correctSound);
+                
             } else {
                 setIncorrectInput(true);
+                playSound(missSound);
             }
         }
     }
