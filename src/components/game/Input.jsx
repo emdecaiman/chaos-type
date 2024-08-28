@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
-const correctSound = new Audio("../../../public/osu-hit-sound.mp3");
-const missSound = new Audio("../../../public/miss-sound.wav");
+const correctSound = new Audio("/osu-hit-sound.mp3");
+const missSound = new Audio("/miss-sound.wav");
 
 const Input = (props) => {
     const [input, setInput] = useState("");
