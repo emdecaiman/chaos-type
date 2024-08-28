@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { GAME_STATES } from "../utils/constants";
-import Timer from "../common/Timer";
+import { GAME_STATES } from "../utils/constants.js";
+import Timer from "../common/Timer.jsx";
+import Button from "../common/Button.jsx"
 
 
 const EndGame = (props) => {
@@ -33,11 +34,10 @@ const EndGame = (props) => {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-5 p-6 bg-gray-600 rounded-xl w-80">
                         <h1 className="text-xl">Score Submitted</h1>
-                        <button
-                            className="btn btn-neutral btn-active rounded-xl w-60 text-white"
-                            onClick={props.onRestart}>
-                            Restart
-                        </button>
+                        <Button 
+                            label={"Restart"}
+                            onClick={props.onRestart}
+                        />
                     </div>
                 </div>
 
@@ -57,17 +57,15 @@ const EndGame = (props) => {
                             onChange={handleInputChange}
                             placeholder="Enter your name"
                         />
-                        <button
-                            className="btn btn-neutral btn-active rounded-xl mb-5 w-60 text-white bg-blue-600 hover:bg-blue-800 border-none"
+                        <Button
+                            className={"mb-5"}
+                            label={"Submit Score"}
                             onClick={submitScore}
-                        >
-                            Submit Score
-                        </button>
-                        <button
-                            className="btn btn-neutral btn-active rounded-xl w-60 text-white bg-blue-600 hover:bg-blue-800 border-none"
-                            onClick={props.onRestart}>
-                            Restart
-                        </button>
+                        />
+                        <Button
+                            onClick={props.onRestart}
+                            label={"Restart"}
+                        />
                     </div>
                 </div>
             );
