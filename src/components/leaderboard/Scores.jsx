@@ -7,7 +7,7 @@ const Scores = () => {
     if (scores.length === 0) {
         return (
             <div className="flex justify-center items-center pt-20">
-                <div className="flex flex-col p-5 items-center bg-gray-600 w-[650px] rounded-xl">
+                <div className="flex flex-col p-5 items-center bg-gray-600 rounded-xl">
                     <h1 className="text-xl font-bold">Leaderboard</h1>
                     <h1>No scores are submitted</h1>
                 </div>
@@ -16,7 +16,7 @@ const Scores = () => {
     } else {
         return (
             <div className="flex justify-center items-center pt-20">
-                <div className="flex flex-col p-5 items-center bg-gray-600 w-[650px] rounded-xl">
+                <div className="flex flex-col p-5 items-center bg-gray-600 rounded-xl">
                     <h1 className="text-xl font-bold">Top 10 Scores</h1>
                     <ol className="list-decimal list-inside">
                         {scores.map((score) => {
