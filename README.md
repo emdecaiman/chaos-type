@@ -1,16 +1,16 @@
-# Chaos Type v2 - A fast-paced typing exercise aimed to improve your typing skills and reaction time.
+# Chaos Type v2
 
-# Play the Game
+## Play the Game
 
 Deployed using Vercel
 
 [chaos-type-v2.vercel.app](https://chaos-type-v2.vercel.app/)
 
-# About
+## About
 
-Chaos Type v2 is an improved version of of the orginal "Chaos Type" game , which was initially developed during SystemsHack 2024, where it won the Chaos Chefs Award. It was a beginner friendly, twelve-hour Hackathon I participated in.
+Chaos Type v2 is an improved version of of the orginal "Chaos Type" game , which was initially developed during SystemsHack 2024, where it won the Chaos Chefs Award. It was a beginner friendly, twelve-hour Hackathon I participated in. It's designed as a fast-paced typing exercise aimed to improve your typing skills and reaction time.
 
-# Features
+## Features
 
 In the first interation, players faced the challenged of typing words that appeared in columns before they reached the bottom of the screen. While this concept introduced the core gamplay, Chaos Type v2 takes it a step futher with several key improvements.
 
@@ -26,7 +26,7 @@ Chaos Type v2 no longer relies on the RandomWord Dictionary API, which results i
 - Improved UI/UX:
 The user interface has been redesigned, offering a more visually appealing and user friendly-experience.
 
-# Screenshots
+## Screenshots
 
 First Iteration:
 
