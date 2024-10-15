@@ -10,7 +10,7 @@ const Header = ({ aboutSectionRef }) => {
     return (
         <div className="flex justify-between items-center p-10 bg-white bg-opacity-5 w-full h-20">
             <div>
-                <Link className="text-xl" to="/home">Chaos Type v2</Link>
+                <Link className="text-xl" to="/home">Chaos Type</Link>
             </div>
             <div className="flex gap-5">
                 <Link className="hover:text-blue-500" to="/home">Play</Link>
