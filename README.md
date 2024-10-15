@@ -24,4 +24,4 @@ Your scores are now saved locally within the browser, allowing you to track your
 Chaos Type no longer relies on the RandomWord Dictionary API, which results in           faster performance and smoother gameplay.
   
 - Improved UI/UX:
-The user interface has been redesigned, offering a more visually appealing and user friendly-experience.
+The user interface has been redesigned using Tailwind CSS and DaisyUI, offering a more visually appealing and user friendly-experience.
