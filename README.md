@@ -4,7 +4,7 @@
 
 Deployed using Vercel
 
-[chaos-type-v2.vercel.app](https://chaos-type-v2.vercel.app/)
+[chaos-type.vercel.app](https://chaos-type.vercel.app/)
 
 ## About
 
